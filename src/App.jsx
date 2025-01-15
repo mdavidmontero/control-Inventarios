@@ -2,35 +2,43 @@ import styled, { ThemeProvider } from "styled-components";
 import { AuthContextProvider } from "./context/AuthContext";
 import { Light, Dark } from "./styles/theme";
 import { MyRoutes } from "./routers/routes";
-import { createContext, useState } from "react";
+import { useState } from "react";
 import { Device } from "./styles/breackpoints";
 import { Sidebar } from "./components/organisms/sidebar/Sidebar";
 import { MenuHambur } from "./components/organisms/MenuHambur";
-export const ThemeContext = createContext(null);
+import { useLocation } from "react-router-dom";
+import { Login } from "./pages/Login";
+import { ThemeContext } from "./hooks/ThemeContext";
+
 function App() {
   const [themeUse, setTheme] = useState("dark");
   const theme = themeUse === "light" ? "light" : "dark";
   const themeStyle = theme === "light" ? Light : Dark;
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
   return (
     <>
       <ThemeContext.Provider value={{ theme, setTheme }}>
         <ThemeProvider theme={themeStyle}>
           <AuthContextProvider>
-            <Container className={sidebarOpen ? "active" : ""}>
-              <section className="contentSidebar">
-                <Sidebar
-                  state={sidebarOpen}
-                  setState={() => setSidebarOpen(!sidebarOpen)}
-                />
-              </section>
-              <section className="contentMenuambur">
-                <MenuHambur />
-              </section>
-              <section className="contentRoutes">
-                <MyRoutes />
-              </section>
-            </Container>
+            {location.pathname != "/login" ? (
+              <Container className={sidebarOpen ? "active" : ""}>
+                <section className="contentSidebar">
+                  <Sidebar
+                    state={sidebarOpen}
+                    setState={() => setSidebarOpen(!sidebarOpen)}
+                  />
+                </section>
+                <section className="contentMenuambur">
+                  <MenuHambur />
+                </section>
+                <section className="contentRoutes">
+                  <MyRoutes />
+                </section>
+              </Container>
+            ) : (
+              <Login />
+            )}
           </AuthContextProvider>
         </ThemeProvider>
       </ThemeContext.Provider>
