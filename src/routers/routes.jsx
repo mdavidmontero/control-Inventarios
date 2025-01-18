@@ -10,6 +10,7 @@ import { Errors } from "../components/molecules/Errors";
 import { useCompanyStore } from "../store/companyStore";
 import { Configuration } from "../pages/Configuration";
 import { Branding } from "../pages/Brand";
+import { Category } from "../pages/Category";
 
 export function MyRoutes() {
   const { user } = UserAuth();
@@ -42,6 +43,7 @@ export function MyRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/configurar" element={<Configuration />} />
         <Route path="/configurar/marca" element={<Branding />} />
+        <Route path="/configurar/categorias" element={<Category />} />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>

@@ -6,13 +6,10 @@ export const Home = () => {
   const dataCompany = useCompanyStore((state) => state.dataCompany);
 
   const { data } = useQuery({
-    queryKey: [
-      "contar usuarios por empresa",
-      { idempresa: dataCompany.empresa?.id },
-    ],
+    queryKey: ["contar usuarios por empresa", { idempresa: dataCompany?.id }],
     queryFn: () =>
       countUsersCompany({
-        id_empresa: dataCompany.empresa?.id,
+        id_empresa: dataCompany?.id,
       }),
     enabled: !!dataCompany,
   });
