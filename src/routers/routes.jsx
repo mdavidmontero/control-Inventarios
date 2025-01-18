@@ -11,6 +11,7 @@ import { useCompanyStore } from "../store/companyStore";
 import { Configuration } from "../pages/Configuration";
 import { Branding } from "../pages/Brand";
 import { Category } from "../pages/Category";
+import { Products } from "../pages/Products";
 
 export function MyRoutes() {
   const { user } = UserAuth();
@@ -26,7 +27,7 @@ export function MyRoutes() {
     queryFn: showUsers,
   });
 
-  const { data: dataEmpresa } = useQuery({
+  useQuery({
     queryKey: ["mostrar empresa"],
     queryFn: () => showCompany({ idusaurio: idUsuario }),
     enabled: !!dataUsers,
@@ -44,6 +45,7 @@ export function MyRoutes() {
         <Route path="/configurar" element={<Configuration />} />
         <Route path="/configurar/marca" element={<Branding />} />
         <Route path="/configurar/categorias" element={<Category />} />
+        <Route path="/configurar/productos" element={<Products />} />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>

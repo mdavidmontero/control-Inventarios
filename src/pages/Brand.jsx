@@ -13,7 +13,7 @@ export const Branding = () => {
     enabled: dataCompany?.id != null,
   });
 
-  const { data: searchdata } = useQuery({
+  useQuery({
     queryKey: [
       "buscar marca",
       { id_empresa: dataCompany.id, descripcion: buscador },

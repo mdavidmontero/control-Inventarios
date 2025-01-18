@@ -13,17 +13,17 @@ export const useCategoryStore = create((set, get) => ({
     set({ buscador: p });
   },
   dataCategories: [],
-  brandItemSelect: [],
+  categoryItemSelect: [],
   parametros: {},
   showCategory: async (p) => {
     const response = await ShowCategory(p);
     set({ parametros: p });
     set({ dataCategories: response });
-    set({ CategoryItemSelect: response[0] });
+    set({ categoryItemSelect: response[0] });
     return response;
   },
   selectCategory: (p) => {
-    set({ CategoryItemSelect: p });
+    set({ categoryItemSelect: p });
   },
   insertCategorys: async (p) => {
     await InsertCategory(p);
