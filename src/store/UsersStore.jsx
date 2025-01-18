@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { supabase } from "../supabase/supabase.config";
-import { InsertUsers } from "../supabase/users.actions";
+import { InsertUsers, ShowUsers } from "../supabase/users.actions";
 
-export const useUsersStore = create((set, get) => ({
+export const useUsersStore = create((set) => ({
   insertUserAdmin: async (p) => {
     const { data, error } = await supabase.auth.signUp({
       email: p.correo,
@@ -15,5 +15,11 @@ export const useUsersStore = create((set, get) => ({
       tipouser: "admin",
     });
     return datauser;
+  },
+  idUsuario: 0,
+  showUsers: async () => {
+    const response = await ShowUsers();
+    set({ idUsuario: response.id });
+    return response;
   },
 }));

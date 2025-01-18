@@ -3,13 +3,45 @@ import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { ProtectedRoute } from "../hooks/ProtectedRoute";
 import { UserAuth } from "../context/AuthContext";
+import { useQuery } from "@tanstack/react-query";
+import { useUsersStore } from "../store/UsersStore";
+import { SpinnerLoading } from "../components/molecules/SpinnerLoading";
+import { Errors } from "../components/molecules/Errors";
+import { useCompanyStore } from "../store/companyStore";
+import { Configuration } from "../pages/Configuration";
+import { Branding } from "../pages/Brand";
 
 export function MyRoutes() {
   const { user } = UserAuth();
+  const showUsers = useUsersStore((state) => state.showUsers);
+  const idUsuario = useUsersStore((state) => state.idUsuario);
+  const showCompany = useCompanyStore((state) => state.showCompany);
+  const {
+    data: dataUsers,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["mostrar usuarios"],
+    queryFn: showUsers,
+  });
+
+  const { data: dataEmpresa } = useQuery({
+    queryKey: ["mostrar empresa"],
+    queryFn: () => showCompany({ idusaurio: idUsuario }),
+    enabled: !!dataUsers,
+  });
+  if (isLoading) {
+    return <SpinnerLoading />;
+  }
+  if (error) {
+    return <Errors mensaje={error.message} />;
+  }
   return (
     <Routes>
       <Route element={<ProtectedRoute user={user} redirectTo="/login" />}>
         <Route path="/" element={<Home />} />
+        <Route path="/configurar" element={<Configuration />} />
+        <Route path="/configurar/marca" element={<Branding />} />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>
