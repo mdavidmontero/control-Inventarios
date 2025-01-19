@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import { supabase } from "../supabase/supabase.config";
 
-export const useAuthStore = create(() => ({
+export const useAuthStore = create((set) => ({
+  isAuth: false,
+  datauserAuth: [],
   signInWithEmail: async (p) => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: p.correo,
@@ -12,10 +14,12 @@ export const useAuthStore = create(() => ({
     }
     return data.user;
   },
-  signOut: async () => {
+  signout: async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) {
-      throw new Error("A ocurrido un error al cerrar sesión", error);
-    }
+    set({ isAuth: false });
+    if (error)
+      throw new Error(
+        "A ocurrido un error durante el cierre de sesión" + error
+      );
   },
 }));

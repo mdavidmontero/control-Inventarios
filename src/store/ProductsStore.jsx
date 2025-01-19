@@ -17,6 +17,9 @@ export const useProductsStore = create((set, get) => ({
   setBuscador: (p) => {
     set({ buscador: p });
   },
+  setItemSelect: (p) => {
+    set({ productosItemSelect: p });
+  },
   dataproductos: [],
   productosItemSelect: [],
   parametros: {},
@@ -24,7 +27,7 @@ export const useProductsStore = create((set, get) => ({
     const response = await ShowProducts(p);
     set({ parametros: p });
     set({ dataproductos: response });
-    set({ productosItemSelect: response[0] });
+    set({ productosItemSelect: [] });
     return response;
   },
   selectproducts: (p) => {

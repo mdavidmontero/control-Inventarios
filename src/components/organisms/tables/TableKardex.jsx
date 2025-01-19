@@ -15,27 +15,9 @@ import { useKardexStore } from "../../../store/KardexStore";
 import { v } from "../../../styles/variables";
 import { ContentAccionesTabla } from "../ContentAccionesTabla";
 
-export const TableKardex = ({
-  data,
-  SetopenRegistro,
-  setdataSelect,
-  setAccion,
-}) => {
+export const TableKardex = ({ data }) => {
   const deleteKardex = useKardexStore((state) => state.deleteKardex);
 
-  const update = (data) => {
-    if (data.descripcion === "Generica") {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Esta registro no se permite modificar ya que es valor por defecto.",
-      });
-      return;
-    }
-    SetopenRegistro(true);
-    setdataSelect(data);
-    setAccion("Editar");
-  };
   const eliminar = (p) => {
     if (p.estado === 0) {
       Swal.fire({

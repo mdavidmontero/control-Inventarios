@@ -18,7 +18,6 @@ export const useKardexStore = create((set, get) => ({
     const response = await ShowKardex(p);
     set({ parametros: p });
     set({ dataKardex: response });
-    set({ kardexItemSelect: response[0] });
     return response;
   },
   selectKardex: (p) => {
@@ -45,5 +44,6 @@ export const useKardexStore = create((set, get) => ({
   searchKardex: async (p) => {
     const response = await SearchKardex(p);
     set({ dataKardex: response });
+    return response;
   },
 }));

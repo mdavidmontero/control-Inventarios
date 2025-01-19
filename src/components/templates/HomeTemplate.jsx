@@ -3,9 +3,11 @@ import { BannerHome } from "../organisms/BannerHome";
 
 export const HomeTemplate = () => {
   return (
-    <Main>
-      <BannerHome />
-    </Main>
+    <>
+      <Main>
+        <BannerHome />
+      </Main>
+    </>
   );
 };
 

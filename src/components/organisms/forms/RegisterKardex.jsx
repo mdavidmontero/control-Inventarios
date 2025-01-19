@@ -11,6 +11,7 @@ import { useProductsStore } from "../../../store/ProductsStore";
 import { CardProductSelect } from "../../molecules/CardProductSelect";
 import { useKardexStore } from "../../../store/KardexStore";
 import { useUsersStore } from "../../../store/UsersStore";
+import { useQueryClient } from "@tanstack/react-query";
 export function RegisterKardex({ onClose, dataSelect, tipo }) {
   const insertKardexs = useKardexStore((state) => state.insertKardexs);
   const idUsuario = useUsersStore((state) => state.idUsuario);
@@ -20,7 +21,9 @@ export function RegisterKardex({ onClose, dataSelect, tipo }) {
   const productosItemSelect = useProductsStore(
     (state) => state.productosItemSelect
   );
+  const setItemSelect = useProductsStore((state) => state.setItemSelect);
   const setBuscador = useProductsStore((state) => state.setBuscador);
+  const query = useQueryClient();
 
   const { dataCompany } = useCompanyStore();
   const {
@@ -39,6 +42,8 @@ export function RegisterKardex({ onClose, dataSelect, tipo }) {
       id_empresa: dataCompany.id,
     };
     await insertKardexs(p);
+    query.invalidateQueries(["mostrar productos"]);
+    setItemSelect([]);
     onClose();
   }
   return (
