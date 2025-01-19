@@ -156,6 +156,7 @@ export const TableProducts = ({
           <ContentAccionesTabla
             funcionEditar={() => editar(info.row.original)}
             funcionEliminar={() => eliminar(info.row.original.id)}
+            stateeditar={true}
           />
         </td>
       ),

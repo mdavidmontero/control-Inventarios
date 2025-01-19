@@ -99,6 +99,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+
   align-items: center;
   justify-content: center;
   border: 0 solid #6b6b6b;

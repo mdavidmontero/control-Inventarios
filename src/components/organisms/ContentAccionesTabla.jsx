@@ -1,15 +1,21 @@
 import styled from "styled-components";
 import { AccionTabla } from "../atoms/AccionTabla";
 import { v } from "../../styles/variables";
-export function ContentAccionesTabla({ funcionEditar, funcionEliminar }) {
+export function ContentAccionesTabla({
+  funcionEditar,
+  funcionEliminar,
+  stateeditar,
+}) {
   return (
     <Container>
-      <AccionTabla
-        funcion={funcionEditar}
-        fontSize="18px"
-        color="#7d7d7d"
-        icono={<v.iconeditarTabla />}
-      />
+      {stateeditar && (
+        <AccionTabla
+          funcion={funcionEditar}
+          fontSize="18px"
+          color="#7d7d7d"
+          icono={<v.iconeditarTabla />}
+        />
+      )}
       <AccionTabla
         funcion={funcionEliminar}
         fontSize="18px"

@@ -89,6 +89,7 @@ export const TableCategory = ({
           <ContentAccionesTabla
             funcionEditar={() => update(info.row.original)}
             funcionEliminar={() => removeBrand(info.row.original)}
+            stateeditar={true}
           />
         </td>
       ),

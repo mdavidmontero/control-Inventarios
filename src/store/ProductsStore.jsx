@@ -2,6 +2,11 @@ import { create } from "zustand";
 import {
   DeleteProducts,
   InsertProducts,
+  ReportInventarioValorado,
+  ReportKardexEntradaSalida,
+  ReportStockBajoMinimo,
+  ReportStockProductsAll,
+  ReportStockXProducto,
   SearchProducts,
   ShowProducts,
   UpdateProducts,
@@ -46,5 +51,26 @@ export const useProductsStore = create((set, get) => ({
   searchproducts: async (p) => {
     const response = await SearchProducts(p);
     set({ dataproductos: response });
+    return response;
+  },
+  reportStoreProductosAll: async (p) => {
+    const response = await ReportStockProductsAll(p);
+    return response;
+  },
+  reportStockxProducto: async (p) => {
+    const response = await ReportStockXProducto(p);
+    return response;
+  },
+  reportBajoMinimo: async (p) => {
+    const response = await ReportStockBajoMinimo(p);
+    return response;
+  },
+  reportKardexEntradaSalida: async (p) => {
+    const response = await ReportKardexEntradaSalida(p);
+    return response;
+  },
+  reportInventarioValorado: async (p) => {
+    const response = await ReportInventarioValorado(p);
+    return response;
   },
 }));

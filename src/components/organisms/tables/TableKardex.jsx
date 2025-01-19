@@ -7,20 +7,21 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import styled from "styled-components";
-import { ContentAccionesTabla } from "../ContentAccionesTabla";
 import Swal from "sweetalert2";
-import { useBrandStore } from "../../../store/BrandStore";
-import { v } from "../../../styles/variables";
 import { FaArrowsAltV } from "react-icons/fa";
 import { Paginated } from "./Paginated";
+import { Device } from "../../../styles/breackpoints";
+import { useKardexStore } from "../../../store/KardexStore";
+import { v } from "../../../styles/variables";
+import { ContentAccionesTabla } from "../ContentAccionesTabla";
 
-export const TableBrand = ({
+export const TableKardex = ({
   data,
   SetopenRegistro,
   setdataSelect,
   setAccion,
 }) => {
-  const deleteBrand = useBrandStore((state) => state.deleteBrand);
+  const deleteKardex = useKardexStore((state) => state.deleteKardex);
 
   const update = (data) => {
     if (data.descripcion === "Generica") {
@@ -35,12 +36,12 @@ export const TableBrand = ({
     setdataSelect(data);
     setAccion("Editar");
   };
-  const removeBrand = (p) => {
-    if (p.descripcion === "Generica") {
+  const eliminar = (p) => {
+    if (p.estado === 0) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Este registro no se permite eliminar ya que es valor por defecto.",
+        text: "Este registro ya fue eliminado",
       });
       return;
     }
@@ -54,19 +55,134 @@ export const TableBrand = ({
       confirmButtonText: "Si, eliminar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteBrand({ id: p.id });
+        await deleteKardex({ id: p.id });
       }
     });
   };
   const columns = [
     {
       accessorKey: "descripcion",
-      header: "Descripción",
+      header: "Producto",
       cell: (info) => (
-        <td data-title="Descripcion" className="ContentCell">
+        <span
+          style={{
+            textDecoration:
+              info.row.original.estado === 0 ? "line-through" : "",
+          }}
+        >
+          {info.getValue()}
+        </span>
+      ),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "fecha",
+      header: "Fecha",
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Fecha" className="ContentCell">
           <span>{info.getValue()}</span>
         </td>
       ),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "tipo",
+      header: "Tipo",
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Tipo" className="ContentCell">
+          {info.getValue() == "salida" ? (
+            <Colorcontent color="#ed4d4d" className="contentCategoria">
+              {info.getValue()}
+            </Colorcontent>
+          ) : (
+            <Colorcontent color="#30c85b" className="contentCategoria">
+              {info.getValue()}
+            </Colorcontent>
+          )}
+        </td>
+      ),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "detalle",
+      header: "Detalle",
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Usuario" className="ContentCell">
+          <span>{info.getValue()}</span>
+        </td>
+      ),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "nombres",
+      header: "Usuario",
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Usuario" className="ContentCell">
+          <span>{info.getValue()}</span>
+        </td>
+      ),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "cantidad",
+      header: "Cantidad",
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Cantidad" className="ContentCell">
+          <span>{info.getValue()}</span>
+        </td>
+      ),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
+    },
+    {
+      accessorKey: "stock",
+      header: "Stock",
+      enableSorting: false,
+      cell: (info) => (
+        <td data-title="Usuario" className="ContentCell">
+          <span>{info.getValue()}</span>
+        </td>
+      ),
+      enableColumnFilter: true,
+      filterFn: (row, columnId, filterStatuses) => {
+        if (filterStatuses.length === 0) return true;
+        const status = row.getValue(columnId);
+        return filterStatuses.includes(status?.id);
+      },
     },
     {
       accessorKey: "acciones",
@@ -75,9 +191,9 @@ export const TableBrand = ({
       cell: (info) => (
         <td className="ContentCell">
           <ContentAccionesTabla
-            funcionEditar={() => update(info.row.original)}
-            funcionEliminar={() => removeBrand(info.row.original)}
-            stateeditar={true}
+            // funcionEditar={() => update(info.row.original)}
+            funcionEliminar={() => eliminar(info.row.original)}
+            stateeditar={false}
           />
         </td>
       ),
@@ -280,5 +396,17 @@ const Container = styled.div`
         }
       }
     }
+  }
+`;
+const Colorcontent = styled.div`
+  color: ${(props) => props.color};
+  border-radius: 8px;
+  border: 1px dashed ${(props) => props.color};
+  text-align: center;
+  padding: 3px;
+  width: 70%;
+  font-weight: 700;
+  @media ${Device.tablet} {
+    width: 100%;
   }
 `;

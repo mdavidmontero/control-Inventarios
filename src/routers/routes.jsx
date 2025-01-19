@@ -13,6 +13,14 @@ import { Branding } from "../pages/Brand";
 import { Category } from "../pages/Category";
 import { Products } from "../pages/Products";
 import { Users } from "../pages/Users";
+import { Kardex } from "../pages/Kardex";
+import { Reports } from "../pages/Reports";
+import StockActualTodos from "../components/organisms/reports/StockActualTodos";
+import StockActualPorProducto from "../components/organisms/reports/StockActualPorProducto";
+import StockBajoMinimo from "../components/organisms/reports/StockBajoMinimo";
+import KardexEntradaSalida from "../components/organisms/reports/KardexEntradaSalida";
+import StockInventarioValorado from "../components/organisms/reports/StockInventarioValorado";
+import { Empresa } from "../pages/Company";
 
 export function MyRoutes() {
   const { user } = UserAuth();
@@ -51,11 +59,29 @@ export function MyRoutes() {
     <Routes>
       <Route element={<ProtectedRoute user={user} redirectTo="/login" />}>
         <Route path="/" element={<Home />} />
+        <Route path="/configurar/empresa" element={<Empresa />} />
         <Route path="/configurar" element={<Configuration />} />
         <Route path="/configurar/marca" element={<Branding />} />
         <Route path="/configurar/categorias" element={<Category />} />
         <Route path="/configurar/productos" element={<Products />} />
         <Route path="/configurar/personal" element={<Users />} />
+        <Route path="/kardex" element={<Kardex />} />
+        <Route path="/reportes" element={<Reports />}>
+          <Route path="stock-actual-todos" element={<StockActualTodos />} />
+          <Route
+            path="stock-actual-por-producto"
+            element={<StockActualPorProducto />}
+          />
+          <Route path="stock-bajo-minimo" element={<StockBajoMinimo />} />
+          <Route
+            path="kardex-entradas-salidas"
+            element={<KardexEntradaSalida />}
+          />
+          <Route
+            path="inventario-valorado"
+            element={<StockInventarioValorado />}
+          />
+        </Route>
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>
