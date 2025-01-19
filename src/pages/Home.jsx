@@ -4,8 +4,7 @@ import { useCompanyStore } from "../store/companyStore";
 export const Home = () => {
   const countUsersCompany = useCompanyStore((state) => state.countUsersCompany);
   const dataCompany = useCompanyStore((state) => state.dataCompany);
-
-  const { data } = useQuery({
+  useQuery({
     queryKey: ["contar usuarios por empresa", { idempresa: dataCompany?.id }],
     queryFn: () =>
       countUsersCompany({

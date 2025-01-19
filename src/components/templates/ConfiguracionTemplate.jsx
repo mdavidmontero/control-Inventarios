@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { DataModulosConfiguracion } from "../../utils/dataEstatica";
 import { Link } from "react-router-dom";
 import fondocuadros from "../../assets/fondocuadros.svg";
+import { Message } from "../molecules/Message";
 
 const ConfiguracionTemplate = () => {
   return (
@@ -10,10 +11,11 @@ const ConfiguracionTemplate = () => {
         {DataModulosConfiguracion.map((item, index) => {
           return (
             <Link
-              to={item.link}
+              to={item.state ? item.link : ""}
               className={item.state ? "card" : "card false"}
               key={index}
             >
+              <Message state={item.state} />
               <div className="card-content">
                 <div className="card-image">
                   <img src={item.icono} />

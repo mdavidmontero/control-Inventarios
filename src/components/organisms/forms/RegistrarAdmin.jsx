@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { v } from "../../../styles/variables";
-
 import { InputText } from "./InputText";
 import { Btnsave } from "../../molecules/BtnSave";
 import { useUsersStore } from "../../../store/UsersStore";
-
 import { useForm } from "react-hook-form";
 import { MdAlternateEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -26,7 +24,6 @@ export function RegistrarAdmin({ setState }) {
       const p = {
         correo: data.correo,
         pass: data.pass,
-        tipouser: "admin",
       };
       const dt = await insertUserAdmin(p);
       if (dt) {

@@ -12,11 +12,13 @@ import { Configuration } from "../pages/Configuration";
 import { Branding } from "../pages/Brand";
 import { Category } from "../pages/Category";
 import { Products } from "../pages/Products";
+import { Users } from "../pages/Users";
 
 export function MyRoutes() {
   const { user } = UserAuth();
   const showUsers = useUsersStore((state) => state.showUsers);
   const idUsuario = useUsersStore((state) => state.idUsuario);
+  const showPermisos = useUsersStore((state) => state.showPermisos);
   const showCompany = useCompanyStore((state) => state.showCompany);
   const {
     data: dataUsers,
@@ -32,6 +34,13 @@ export function MyRoutes() {
     queryFn: () => showCompany({ idusaurio: idUsuario }),
     enabled: !!dataUsers,
   });
+
+  useQuery({
+    queryKey: ["mostrar permisos", { id_usuario: idUsuario }],
+    queryFn: () => showPermisos({ id_usuario: idUsuario }),
+    enabled: !!dataUsers,
+  });
+
   if (isLoading) {
     return <SpinnerLoading />;
   }
@@ -46,6 +55,7 @@ export function MyRoutes() {
         <Route path="/configurar/marca" element={<Branding />} />
         <Route path="/configurar/categorias" element={<Category />} />
         <Route path="/configurar/productos" element={<Products />} />
+        <Route path="/configurar/personal" element={<Users />} />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>
