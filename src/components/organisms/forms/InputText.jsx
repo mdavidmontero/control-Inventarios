@@ -27,7 +27,6 @@ const Container = styled.div`
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
     -webkit-background-clip: text;
-    -webkit-text-fill-color: ${(props) => props.theme.text};
     transition: background-color 5000s ease-in-out 0s;
   }
   .form__field {
@@ -37,7 +36,6 @@ const Container = styled.div`
     border-bottom: 2px solid #9b9b9b;
     outline: 0;
     font-size: 17px;
-    color: ${(props) => props.theme.text};
     padding: 7px 0;
     background: transparent;
     transition: border-color 0.2s;

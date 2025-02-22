@@ -3,6 +3,7 @@ import { supabase } from "../supabase/supabase.config";
 import {
   DeletePermisos,
   DeleteUsers,
+  EditarTemaMonedaUser,
   InsertAsignaciones,
   InsertPermisos,
   InsertUsers,
@@ -17,6 +18,7 @@ import { DataModulosConfiguracion } from "../utils/dataEstatica";
 
 export const useUsersStore = create((set, get) => ({
   dataModulos: [],
+  dataUsuario: [],
   insertUserAdmin: async (p) => {
     const { data, error } = await supabase.auth.signUp({
       email: p.correo,
@@ -33,8 +35,12 @@ export const useUsersStore = create((set, get) => ({
   idUsuario: 0,
   showUsers: async () => {
     const response = await ShowUsers();
-    set({ idUsuario: response.id });
-    return response;
+    if (response) {
+      set({ idUsuario: response.id, dataUsuario: response });
+      return response;
+    } else {
+      return [];
+    }
   },
 
   buscador: "",
@@ -154,5 +160,11 @@ export const useUsersStore = create((set, get) => ({
     const response = await ShowPermisos(p);
     set({ dataPermisosEdit: response });
     return response;
+  },
+
+  editartemamonedauser: async (p) => {
+    await EditarTemaMonedaUser(p);
+    const { showUsers } = get();
+    set(showUsers);
   },
 }));

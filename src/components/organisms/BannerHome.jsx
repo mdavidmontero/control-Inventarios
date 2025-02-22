@@ -3,6 +3,7 @@ import fondocuadros from "../../assets/fondocuadros.svg";
 import { v } from "../../styles/variables";
 import { Device } from "../../styles/breackpoints";
 import { CardDatosEmpresa } from "../molecules/CardDatosEmpresa";
+
 export function BannerHome() {
   return (
     <>
@@ -10,7 +11,7 @@ export function BannerHome() {
         <div className="content-wrapper-context">
           <span className="titulo">
             {<v.iconoempresa />}
-            Bienvenido a StockPRO
+            Bienvenido a StockPro
           </span>
           <div className="content-text">
             StockPRO te ayuda a tener un control de tus inventarios desde

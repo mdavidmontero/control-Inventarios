@@ -3,8 +3,11 @@ import { Header } from "../organisms/Header";
 import { BannerEmpresa } from "../organisms/BannerEmpresa";
 import { useState } from "react";
 import { Title } from "../atoms/Title";
+import { useCompanyStore } from "../../store/companyStore";
 export function EmpresaTemplate() {
   const [state, setState] = useState(false);
+  const dataCompany = useCompanyStore((state) => state.dataCompany);
+
   return (
     <Container>
       <header className="header">
@@ -14,7 +17,7 @@ export function EmpresaTemplate() {
       </header>
       <section className="area1">
         <ContentFiltro>
-          <Title>Tu empresa</Title>
+          <Title>{dataCompany?.nombre}</Title>
         </ContentFiltro>
       </section>
       <section className="area2"></section>

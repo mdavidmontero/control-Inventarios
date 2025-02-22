@@ -1,11 +1,19 @@
 import styled from "styled-components";
-import { useContext } from "react";
-import { ThemeContext } from "../../hooks/ThemeContext";
+import { useUsersStore } from "../../store/UsersStore";
 
 export function ToggleTheme() {
-  const { setTheme } = useContext(ThemeContext);
+  const { editartemamonedauser, dataUsuario } = useUsersStore();
+
+  const editarTema = async () => {
+    const temaElegido = dataUsuario?.tema === "0" ? "1" : "0";
+    const p = {
+      id: dataUsuario?.id,
+      tema: temaElegido,
+    };
+    await editartemamonedauser(p);
+  };
   const CambiarTheme = () => {
-    setTheme((theme) => (theme === "light" ? "dark" : "light"));
+    editarTema();
   };
   return (
     <Container>

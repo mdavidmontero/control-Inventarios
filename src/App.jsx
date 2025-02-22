@@ -2,16 +2,17 @@ import { ThemeProvider } from "styled-components";
 import { AuthContextProvider } from "./context/AuthContext";
 import { Light, Dark } from "./styles/theme";
 import { MyRoutes } from "./routers/routes";
-import { useState } from "react";
 import { ThemeContext } from "./hooks/ThemeContext";
+import { useUsersStore } from "./store/UsersStore";
 
 function App() {
-  const [themeUse, setTheme] = useState("dark");
-  const theme = themeUse === "light" ? "light" : "dark";
+  const { dataUsuario } = useUsersStore();
+  const theme = dataUsuario?.tema === "0" ? "light" : "dark";
   const themeStyle = theme === "light" ? Light : Dark;
+
   return (
     <>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
+      <ThemeContext.Provider value={{ theme }}>
         <ThemeProvider theme={themeStyle}>
           <AuthContextProvider>
             <MyRoutes />

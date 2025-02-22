@@ -6,16 +6,13 @@ import { MdOutlineInfo } from "react-icons/md";
 import { InputText } from "../organisms/forms/InputText";
 import logo from "../../assets/inventarioslogo.png";
 import carrito from "../../assets/carrito.svg";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useAuthStore } from "../../store/AuthStore";
 import { useForm } from "react-hook-form";
-import { ThemeContext } from "../../hooks/ThemeContext";
 import { v } from "../../styles/variables";
 import { FooterLogin } from "../organisms/FooterLogin";
 import { RegistrarAdmin } from "../organisms/forms/RegistrarAdmin";
 export const LoginTemplate = () => {
-  const { setTheme } = useContext(ThemeContext);
-  setTheme("light");
   const signInWithEmail = useAuthStore((state) => state.signInWithEmail);
   const [state, setState] = useState(false);
   const [stateInicio, setStateInicio] = useState(false);

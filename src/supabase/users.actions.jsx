@@ -112,3 +112,14 @@ export async function ShowModulos() {
   const { data } = await supabase.from("modulos").select();
   return data;
 }
+
+export async function EditarTemaMonedaUser(p) {
+  try {
+    const { error } = await supabase.from("usuarios").update(p).eq("id", p.id);
+    if (error) {
+      alert("Error al editar usuarios", error);
+    }
+  } catch (error) {
+    alert(error.error_description || error.message + "EditarTemaMonedaUser");
+  }
+}
