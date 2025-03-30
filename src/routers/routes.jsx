@@ -16,6 +16,9 @@ import KardexEntradaSalida from "../components/organisms/reports/KardexEntradaSa
 import StockInventarioValorado from "../components/organisms/reports/StockInventarioValorado";
 import { Empresa } from "../pages/Company";
 import { Layout } from "../hooks/Layout";
+import { Puntos } from "../pages/Puntos";
+import { KardexPunto } from "../pages/KardexPunto";
+import { InventarioProductosPunto } from "../pages/InventarioProductosPunto";
 
 export function MyRoutes() {
   return (
@@ -69,6 +72,16 @@ export function MyRoutes() {
         }
       />
       <Route
+        path="/configurar/inventario"
+        element={
+          <ProtectedRoute accessBy="authenticated">
+            <Layout>
+              <Puntos />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/configurar/marca"
         element={
           <ProtectedRoute accessBy="authenticated">
@@ -99,11 +112,31 @@ export function MyRoutes() {
         }
       />
       <Route
+        path="/configurar/inventario-punto"
+        element={
+          <ProtectedRoute accessBy="authenticated">
+            <Layout>
+              <InventarioProductosPunto />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/kardex"
         element={
           <ProtectedRoute accessBy="authenticated">
             <Layout>
               <Kardex />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/kardex-punto"
+        element={
+          <ProtectedRoute accessBy="authenticated">
+            <Layout>
+              <KardexPunto />
             </Layout>
           </ProtectedRoute>
         }

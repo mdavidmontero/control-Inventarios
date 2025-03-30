@@ -16,7 +16,13 @@ export function ListaGenerica({ data, setState, funcion, scroll, bottom }) {
           return (
             <ItemContainer key={index} onClick={() => seleccionar(item)}>
               <span>💎</span>
-              <span>{item.descripcion}</span>
+              <span>{item.descripcion || item.nombre}</span>-
+              {item.punto_nombre && (
+                <span className="punto">
+                  {item.punto_nombre}
+                  <span className="punto">📍</span>
+                </span>
+              )}
             </ItemContainer>
           );
         })}
@@ -38,6 +44,7 @@ const Container = styled.div`
   gap: 10px;
   z-index: 3;
   height: 230px;
+  overflow-y: scroll;
   @media ${() => Device.tablet} {
     width: 400px;
   }

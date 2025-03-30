@@ -7,6 +7,7 @@ import {
   ReportStockBajoMinimo,
   ReportStockProductsAll,
   ReportStockXProducto,
+  SearchProductPunto,
   SearchProducts,
   ShowProducts,
   UpdateProducts,
@@ -20,18 +21,27 @@ export const useProductsStore = create((set, get) => ({
   setItemSelect: (p) => {
     set({ productosItemSelect: p });
   },
+  setItemSelectPuntoProduct: (p) => {
+    set({ productosItemSelectPunto: p });
+  },
   dataproductos: [],
+  dataproductosPunto: [],
   productosItemSelect: [],
+  productosItemSelectPunto: [],
   parametros: {},
   showproducts: async (p) => {
     const response = await ShowProducts(p);
     set({ parametros: p });
     set({ dataproductos: response });
-    set({ productosItemSelect: [] });
+    // Todo revisar esto
+    set({ productosItemSelect: response[0] });
     return response;
   },
   selectproducts: (p) => {
     set({ productosItemSelect: p });
+  },
+  selectproductsPunto: (p) => {
+    set({ productosItemSelectPunto: p });
   },
   insertproducts: async (p) => {
     await InsertProducts(p);
@@ -54,6 +64,11 @@ export const useProductsStore = create((set, get) => ({
   searchproducts: async (p) => {
     const response = await SearchProducts(p);
     set({ dataproductos: response });
+    return response;
+  },
+  searhProductPunto: async (p) => {
+    const response = await SearchProductPunto(p);
+    set({ dataproductosPunto: response });
     return response;
   },
   reportStoreProductosAll: async (p) => {

@@ -32,6 +32,11 @@ export const LinksArray = [
     to: "/kardex",
   },
   {
+    label: "Kardex por Punto",
+    icon: <v.iconoprecioventa />,
+    to: "/kardex-punto",
+  },
+  {
     label: "Reportes",
     icon: <v.iconoreportes />,
     to: "/reportes",
@@ -76,6 +81,18 @@ export const DataModulosConfiguracion = [
     subtitle: "configura tus opciones básicas",
     icono: "https://i.ibb.co/x7mHPgm/administracion-de-empresas.png",
     link: "/configurar/empresa",
+  },
+  {
+    title: "Puntos",
+    subtitle: "Registra puntos de venta para controlar su inventario",
+    icono: "https://i.ibb.co/M51z5ztN/puntos.png",
+    link: "/configurar/inventario",
+  },
+  {
+    title: "Inventario por Punto",
+    subtitle: "Registra productos por punto de venta",
+    icono: "https://i.ibb.co/M51z5ztN/puntos.png",
+    link: "/configurar/inventario-punto",
   },
   {
     title: "Categoria de productos",

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Device } from "../../styles/breackpoints";
 import { useState } from "react";
 import { v } from "../../styles/variables";
-import { TableKardex } from "./tables/TableKardex";
+import { TableKardexPunto } from "./tables/TableKardexPunto";
 
 export const Tabs = ({ data }) => {
   const [activeTab, setactiveTab] = useState(0);
@@ -23,7 +23,7 @@ export const Tabs = ({ data }) => {
       </ul>
 
       <div className="tab-content">
-        {activeTab === 0 && <TableKardex data={data} />}
+        {activeTab === 0 && <TableKardexPunto data={data} />}
         {activeTab === 1 && <span>area 2</span>}
         {activeTab === 2 && <span>area 3</span>}
       </div>

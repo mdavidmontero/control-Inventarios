@@ -9,39 +9,54 @@ import { useState } from "react";
 import { ListaGenerica } from "../../molecules/ListaGenerica";
 import { useProductsStore } from "../../../store/ProductsStore";
 import { CardProductSelect } from "../../molecules/CardProductSelect";
-import { useKardexStore } from "../../../store/KardexStore";
 import { useUsersStore } from "../../../store/UsersStore";
 import { useQueryClient } from "@tanstack/react-query";
-export function RegisterKardex({ onClose, dataSelect, tipo }) {
-  const insertKardexs = useKardexStore((state) => state.insertKardexs);
+import { useKardexPuntoStore } from "../../../store/KardexPuntoStore";
+import { usePuntosStore } from "../../../store/PuntosStore";
+import { ContainerSelector } from "../../atoms/ContainerSelector";
+import { Selector } from "../Selector";
+import { BtnFilter } from "../../molecules/BtnFilter";
+export function RegisterKardexPunto({ onClose, dataSelect, tipo }) {
+  const [statePunto, setStatePunto] = useState(false);
+  const insertKardexPunto = useKardexPuntoStore(
+    (state) => state.insertKardexPunto
+  );
   const idUsuario = useUsersStore((state) => state.idUsuario);
   const [stateListaProd, SetstateListaProd] = useState(false);
-  const dataproductos = useProductsStore((state) => state.dataproductos);
-  const selectproducts = useProductsStore((state) => state.selectproducts);
-  const productosItemSelect = useProductsStore(
-    (state) => state.productosItemSelect
+  const dataproductosPunto = useProductsStore(
+    (state) => state.dataproductosPunto
   );
+  const selectproductsPunto = useProductsStore(
+    (state) => state.selectproductsPunto
+  );
+  const productosItemSelectPunto = useProductsStore(
+    (state) => state.productosItemSelectPunto
+  );
+  const dataPuntos = usePuntosStore((state) => state.dataPuntos);
+  const selectPuntos = usePuntosStore((state) => state.selectPuntos);
+  const puntosItemSelect = usePuntosStore((state) => state.puntosItemSelect);
   const setItemSelect = useProductsStore((state) => state.setItemSelect);
   const setBuscador = useProductsStore((state) => state.setBuscador);
   const query = useQueryClient();
-
   const { dataCompany } = useCompanyStore();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+
   async function insertar(data) {
     const p = {
       fecha: new Date(),
       tipo: tipo,
       id_usuario: idUsuario,
-      id_producto: productosItemSelect.id,
+      id_producto: productosItemSelectPunto.id_producto,
       cantidad: parseFloat(data.cantidad),
       detalle: data.detalle,
       id_empresa: dataCompany.id,
+      id_punto: puntosItemSelect.id,
     };
-    await insertKardexs(p);
+    await insertKardexPunto(p);
     query.invalidateQueries(["mostrar productos"]);
     setItemSelect([]);
     onClose();
@@ -66,15 +81,16 @@ export function RegisterKardex({ onClose, dataSelect, tipo }) {
             <ListaGenerica
               bottom="-250px"
               scroll="scroll"
-              data={dataproductos}
+              data={dataproductosPunto}
               setState={() => SetstateListaProd(!stateListaProd)}
-              funcion={selectproducts}
+              funcion={selectproductsPunto}
             />
           )}
         </div>
         <CardProductSelect
-          text1={productosItemSelect.descripcion}
-          text2={productosItemSelect.stock}
+          text1={productosItemSelectPunto.descripcion}
+          text2={productosItemSelectPunto.stock}
+          text3={productosItemSelectPunto?.punto_nombre}
         />
 
         <form className="formulario" onSubmit={handleSubmit(insertar)}>
@@ -94,6 +110,34 @@ export function RegisterKardex({ onClose, dataSelect, tipo }) {
                 {errors.cantidad?.type === "required" && <p>Campo requerido</p>}
               </InputText>
             </article>
+
+            <article>
+              <ContainerSelector>
+                <label>Puntos: </label>
+                <Selector
+                  funcion={() => setStatePunto(!statePunto)}
+                  state={statePunto}
+                  color="#fc6027"
+                  texto1="🍿"
+                  texto2={puntosItemSelect?.nombre || "Seleccionar punto"}
+                />
+                {statePunto && (
+                  <ListaGenerica
+                    setState={() => setStatePunto(false)}
+                    bottom="-260px"
+                    scroll="scroll"
+                    data={dataPuntos}
+                    funcion={selectPuntos}
+                  />
+                )}
+                <BtnFilter
+                  bgcolor="#f6f3f3"
+                  textcolor="#353535"
+                  icono={<v.agregar />}
+                />
+              </ContainerSelector>
+            </article>
+
             <article>
               <InputText icono={<v.iconomarca />}>
                 <input

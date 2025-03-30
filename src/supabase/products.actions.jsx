@@ -36,6 +36,11 @@ export async function SearchProducts(p) {
   return data;
 }
 
+export async function SearchProductPunto(p) {
+  const { data } = await supabase.rpc("buscarproductospuntop", p);
+  return data;
+}
+
 export async function ReportStockProductsAll(p) {
   const { data, error } = await supabase
     .from(tabla)

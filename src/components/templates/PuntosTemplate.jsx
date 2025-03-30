@@ -1,38 +1,35 @@
 import { useState } from "react";
+import { useCategoryStore } from "../../store/CategoryStore";
 import styled from "styled-components";
 import { Header } from "../organisms/Header";
 import { ContentFiltro } from "../atoms/ContentFilter";
 import { Title } from "../atoms/Title";
+import { BtnFilter } from "../molecules/BtnFilter";
 import { Buscador } from "../organisms/Buscador";
-import { Btnsave } from "../molecules/BtnSave";
-import { Tabs } from "../organisms/Tabs";
-import { RegisterKardex } from "../organisms/forms/RegisterKardex";
-import { useKardexStore } from "../../store/KardexStore";
+import { Lottieanimacion } from "../molecules/Lottieanimacion";
+import { v } from "../../styles/variables";
+import vacio from "../../assets/vacio.json";
+import { TablePuntos } from "../organisms/tables/TablePuntos";
+import { RegisterPunto } from "../organisms/forms/RegisterPunto";
+import { usePuntosStore } from "../../store/PuntosStore";
 
-export const KardexTemplate = ({ data }) => {
+export const PuntosTemplate = ({ data }) => {
   const [state, setState] = useState(false);
   const [dataSelect, setdataSelect] = useState([]);
   const [accion, setAccion] = useState("");
   const [openRegistro, SetopenRegistro] = useState(false);
-  const [tipo, setTipo] = useState("");
-  function nuevaentrada() {
-    SetopenRegistro(true);
-    setTipo("entrada");
-  }
-  function nuevasalida() {
-    SetopenRegistro(true);
-    setTipo("salida");
-  }
-
-  const setBuscador = useKardexStore((state) => state.setBuscador);
-
+  const nuevoRegistro = () => {
+    SetopenRegistro(!openRegistro);
+    setAccion("Nuevo");
+    setdataSelect([]);
+  };
+  const setBuscador = usePuntosStore((state) => state.setBuscador);
   return (
     <Container>
       {openRegistro && (
-        <RegisterKardex
+        <RegisterPunto
           dataSelect={dataSelect}
           accion={accion}
-          tipo={tipo}
           onClose={() => SetopenRegistro(!openRegistro)}
         />
       )}
@@ -44,16 +41,28 @@ export const KardexTemplate = ({ data }) => {
       </header>
       <section className="area1">
         <ContentFiltro>
-          <Title>Kardex</Title>
-          <Btnsave bgcolor="#52de65" titulo="+Entrada" funcion={nuevaentrada} />
-          <Btnsave bgcolor="#fb6661" titulo="-Salida" funcion={nuevasalida} />
+          <Title>Puntos</Title>
+          <BtnFilter
+            funcion={nuevoRegistro}
+            bgcolor="#f6f3f3"
+            textcolor="#353535"
+            icono={<v.agregar />}
+          />
         </ContentFiltro>
       </section>
       <section className="area2">
         <Buscador setBuscador={setBuscador} />
       </section>
       <section className="main">
-        <Tabs data={data} />
+        {data.length == 0 && (
+          <Lottieanimacion alto="300" ancho="300" animacion={vacio} />
+        )}
+        <TablePuntos
+          data={data}
+          SetopenRegistro={SetopenRegistro}
+          setdataSelect={setdataSelect}
+          setAccion={setAccion}
+        />
       </section>
     </Container>
   );
@@ -69,32 +78,27 @@ const Container = styled.div`
   grid-template:
     "header" 100px
     "area1" 100px
-    "area2" 100px
+    "area2" 60px
     "main" auto;
 
   .header {
     grid-area: header;
-    /* background-color: rgba(103, 93, 241, 0.14); */
     display: flex;
     align-items: center;
   }
   .area1 {
     grid-area: area1;
-    /* background-color: rgba(229, 67, 26, 0.14); */
     display: flex;
     align-items: center;
   }
   .area2 {
     grid-area: area2;
-    /* background-color: rgba(77, 237, 106, 0.14); */
+
     display: flex;
     align-items: center;
     justify-content: end;
   }
-
   .main {
-    margin-top: 20px;
     grid-area: main;
-    /* background-color: rgba(179, 46, 241, 0.14); */
   }
 `;

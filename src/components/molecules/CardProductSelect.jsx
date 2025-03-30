@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-export const CardProductSelect = ({ text1, text2 }) => {
+export const CardProductSelect = ({ text1, text2, text3 }) => {
   return (
     <Container>
       <span className="descripcion">{text1}</span>
       <span className="stock">Stock Actual: {text2}</span>
+      <span className="stock">Punto: {text3}</span>
     </Container>
   );
 };

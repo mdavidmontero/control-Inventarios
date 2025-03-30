@@ -158,6 +158,7 @@ const Container = styled.div`
   height: 80vh;
   display: flex;
   flex-direction: column;
+
   gap: 15px;
   .pdfviewer {
     width: 100%;
